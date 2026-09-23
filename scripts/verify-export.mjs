@@ -2,7 +2,7 @@ import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { resolve, relative, sep } from 'node:path';
 const root=resolve('out');
 const {basePath}=JSON.parse(readFileSync(resolve(root,'site-config.json'),'utf8'));
-const routes=['','research','publications','projects','people','community','resources','join',...['recast','halluprop','evoguard','lara','redpj'].map(x=>'projects/'+x)];
+const routes=['','research','publications','projects','advisor','people','community','resources','join',...['recast','halluprop','evoguard','lara','redpj'].map(x=>'projects/'+x)];
 const failures=[];
 for(const route of routes){if(!existsSync(resolve(root,route,'index.html')))failures.push('Missing route '+route);}
 if(!existsSync(resolve(root,'404.html')))failures.push('Missing 404.html');
@@ -12,7 +12,8 @@ const pages=walk(root).filter(p=>p.endsWith('.html'));
 let checkedLinks=0;
 for(const page of pages){
  const text=readFileSync(page,'utf8');
- if(/待补充|待确认|将在确认后|资料确认后|待完善/.test(text))failures.push('Unconverted placeholder '+relative(root,page));
+ if(/\p{Script=Han}/u.test(text))failures.push('Untranslated content '+relative(root,page));
+ if(!text.includes('lang="en"'))failures.push('Missing English document language '+relative(root,page));
  const current='https://local.test'+basePath+'/'+relative(root,page).split(sep).join('/').replace(/index\.html$/,'');
  for(const match of text.matchAll(/<(?:a|link|script|img)\b[^>]*?\b(?:href|src)="([^"]+)"/g)){
   const href=match[1].replaceAll('&amp;','&');
@@ -30,7 +31,7 @@ for(const page of pages){
   checkedLinks++;
  }
 }
-for(const page of ['people/index.html','join/index.html','community/index.html','resources/index.html']){
+for(const page of ['advisor/index.html','people/index.html','join/index.html','community/index.html','resources/index.html']){
  if(!readFileSync(resolve(root,page),'utf8').includes('XXX'))failures.push('Missing XXX fields on '+page);
 }
 if(failures.length){console.error([...new Set(failures)].join('\n'));process.exit(1);}

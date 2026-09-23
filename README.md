@@ -1,16 +1,16 @@
 # TrustLab 实验室网站
 
-基于 Next.js、React 和 TypeScript 的多页面学术实验室网站。保持简洁蓝白学术风格，支持桌面和移动端布局、成果分类、研究方向锚点、独立项目详情和 404 页面。
+基于 Next.js、React 和 TypeScript 的多页面学术实验室网站。保持简洁蓝白学术风格，全站使用英文，支持桌面和移动端布局、导师介绍、成果分类、研究方向锚点、独立项目详情和 404 页面。
 
-## 直接运行已构建的网站
+## 预览已构建的网站
 
-下载完整项目后，在项目根目录运行（需要 Node.js 22.13 或更高版本）：
+完成下方构建步骤后，在项目根目录运行（需要 Node.js 22.13 或更高版本）：
 
 ```bash
 node scripts/preview.mjs
 ```
 
-打开终端打印的地址。预构建版本的地址为 `http://localhost:3000/trustlab-website/`。此方式无需安装依赖。
+终端会根据构建路径输出访问地址。部署路径为 `/trustlab-website` 时，预览地址为 `http://localhost:3000/trustlab-website/`。
 
 > 请通过本地 HTTP 服务访问，不要直接双击 HTML 文件。JavaScript 路由和资源使用正式部署路径。
 
@@ -40,12 +40,12 @@ pnpm preview
 
 ## GitHub Pages
 
-预定仓库：`theshi-1128/trustlab-website`。不要替换现有的 `TrustLab` 模板仓库。
+网站仓库：`theshi-1128/trustlab-website`。不要替换现有的 `TrustLab` 模板仓库。
 
 1. 将项目源码推送到新仓库的 `main` 分支。
 2. 在仓库 **Settings → Pages → Build and deployment → Source** 中选择 **GitHub Actions**。
 3. `.github/workflows/deploy-pages.yml` 在推送时自动安装依赖、构建、验证并部署；也可在 Actions 中手动运行。
-4. 网站地址由部署结果给出。按上述仓库名部署时，预期为 `https://theshi-1128.github.io/trustlab-website/`，部署成功前该地址不代表已上线。
+4. 网站地址由部署结果给出。按上述仓库名部署时，为 `https://theshi-1128.github.io/trustlab-website/`。
 
 所需权限：构建任务仅读取仓库；发布任务仅使用 `pages: write` 和 `id-token: write`。工作流使用 GitHub 自动提供的凭证，无需在源码中存储个人访问令牌。
 
@@ -57,6 +57,7 @@ pnpm preview
 | 研究方向 | `/research/` |
 | 学术成果 | `/publications/` |
 | 研究项目 | `/projects/` |
+| 导师介绍 | `/advisor/` |
 | 团队成员 | `/people/` |
 | 学术动态 | `/community/` |
 | 学习与教学 | `/resources/` |
@@ -65,7 +66,9 @@ pnpm preview
 
 ## 修改内容
 
-- `app/data.ts`：项目、研究方向、新闻、成员和联系信息。
+- `app/data.ts`：项目、研究方向、新闻、导师、成员和联系信息。
+- `advisorProfile`：导师姓名、职称、简介、研究兴趣、教育经历、工作经历、荣誉、学术服务、教学、学术主页和联系方式。填入英文即可同步更新首页导师摘要和独立导师页。
+- 主页入口：页头、侧栏与页脚的 TrustLab 名称都链接到实验室主页。
 - `app/site.tsx`：页面结构和展示文案。
 - `app/globals.css`：配色、布局、字号和移动端适配。
 - `public/favicon.svg`：网站图标。
@@ -82,4 +85,4 @@ pnpm preview
 - 所有动态路由均通过 `generateStaticParams` 在构建时生成。
 - `trailingSlash: true` 将子页面输出为目录内的 `index.html`，支持直接打开与刷新。
 - 保留 `.nojekyll` 和 `404.html`，避免 GitHub Pages 忽略静态资源。
-- `out/` 是构建产物，不提交到源码仓库；完整下载包中附带已验证的产物供直接运行。
+- `out/` 是构建产物，不提交到源码仓库；从仓库下载源码后，请先运行构建命令再预览。
