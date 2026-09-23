@@ -38,7 +38,6 @@ function Sidebar() {
     <div className="affiliation"><Building2 /><div><strong>Zhejiang Gongshang University</strong><p>School of Computer and Information Engineering</p></div></div>
     <p className="location"><MapPin size={16} />Hangzhou, China</p>
     <div className="profile-links">
-      <Link href="/advisor"><GraduationCap />Our Advisor<ArrowUpRight /></Link>
       <Link href="/research"><Microscope />Research<ArrowUpRight /></Link>
       <Link href="/publications"><BookOpen />Publications<ArrowUpRight /></Link>
       <Link href="/join#contact"><Mail />Contact<ArrowUpRight /></Link>
@@ -69,27 +68,6 @@ function PaperRow({ p, diagram = false }: { p: Project; diagram?: boolean }) {
   </article>;
 }
 
-function AdvisorOverview() {
-  return <section className="home-section advisor-overview" aria-labelledby="advisor-overview-title">
-    <div className="section-title"><h2 id="advisor-overview-title">Our Advisor</h2><Link href="/advisor">Full profile<ArrowUpRight size={15} /></Link></div>
-    <div className="advisor-summary">
-      <div className="advisor-portrait" role="img" aria-label="Advisor portrait placeholder">{advisorProfile.photo}</div>
-      <div className="advisor-summary-content">
-        <span className="small-label">FACULTY PROFILE</span>
-        <h3><Link href="/advisor">{advisorProfile.name}<ArrowUpRight size={19} /></Link></h3>
-        <p className="advisor-position">{advisorProfile.title}</p>
-        <p className="advisor-affiliation">{advisorProfile.department}<br />{advisorProfile.institution}</p>
-        <dl className="advisor-quick-facts">
-          <div><dt>Biography</dt><dd>{advisorProfile.bio}</dd></div>
-          <div><dt>Research interests</dt><dd>{advisorProfile.research}</dd></div>
-          <div><dt>Email</dt><dd>{advisorProfile.email}</dd></div>
-        </dl>
-        <Link href="/advisor" className="text-link">Biography, education &amp; academic service<ArrowRight size={15} /></Link>
-      </div>
-    </div>
-  </section>;
-}
-
 function Home() {
   return <>
     <section className="intro">
@@ -100,7 +78,6 @@ function Home() {
       <p className="intro-body">Our research connects interpretable risk prediction with adaptive mitigation, turning a deeper understanding of security into reliable methods and tools.</p>
       <div className="intro-bottom"><div className="topic-tags"><span>AI Safety</span><span>Multi-agent Systems</span><span>System Security</span></div><Link href="/research" className="text-link">Explore our research<ArrowRight size={15} /></Link></div>
     </section>
-    <AdvisorOverview />
     <section className="home-section research-overview">
       <SectionTitle title="Research Areas" href="/research" label="Explore research" />
       <div className="area-grid">{areas.map((a, i) => <Link key={a.id} href={'/research#' + a.id} className="area-card">
