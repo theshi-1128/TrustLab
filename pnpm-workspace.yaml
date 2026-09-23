@@ -1,0 +1,12 @@
+# Keep the exact dependency override used by pnpm-lock.yaml.
+overrides:
+  miniflare>sharp: 0.35.4
+
+# Explicitly permit the native build steps required by the locked dependencies.
+strictDepBuilds: true
+allowBuilds:
+  esbuild: true
+  fsevents: true
+  sharp: true
+  unrs-resolver: true
+  workerd: true
