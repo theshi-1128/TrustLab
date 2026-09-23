@@ -10,7 +10,7 @@
 node scripts/preview.mjs
 ```
 
-终端会根据构建路径输出访问地址。部署路径为 `/trustlab-website` 时，预览地址为 `http://localhost:3000/trustlab-website/`。
+终端会根据构建路径输出访问地址。部署路径为 `/TrustLab` 时，预览地址为 `http://localhost:3000/TrustLab/`。
 
 > 请通过本地 HTTP 服务访问，不要直接双击 HTML 文件。JavaScript 路由和资源使用正式部署路径。
 
@@ -36,16 +36,18 @@ pnpm preview
 - `pnpm verify`：校验页面、内部链接、资源、路径前缀与 XXX 占位。
 - `pnpm preview`：用 Node.js 提供本地静态服务。
 
-部署在子目录时，在构建前设置 `NEXT_PUBLIC_BASE_PATH`，例如 `/trustlab-website`。GitHub Actions 已自动处理普通仓库与 `<用户名>.github.io` 仓库的路径差异。
+部署在子目录时，在构建前设置 `NEXT_PUBLIC_BASE_PATH`，例如 `/TrustLab`。GitHub Actions 已自动处理普通仓库与 `<所有者名称>.github.io` 仓库的路径差异；所有者可以是个人账号或组织。
 
 ## GitHub Pages
 
-网站仓库：`theshi-1128/trustlab-website`。不要替换现有的 `TrustLab` 模板仓库。
+网站源码仓库：`TrustLab`。原有模板和资料单独保存在私有仓库 `TrustLab-assets`，不作为网站部署源。
 
-1. 将项目源码推送到新仓库的 `main` 分支。
+1. 将项目源码推送到 `TrustLab` 仓库的 `main` 分支。
 2. 在仓库 **Settings → Pages → Build and deployment → Source** 中选择 **GitHub Actions**。
 3. `.github/workflows/deploy-pages.yml` 在推送时自动安装依赖、构建、验证并部署；也可在 Actions 中手动运行。
-4. 网站地址由部署结果给出。按上述仓库名部署时，为 `https://theshi-1128.github.io/trustlab-website/`。
+4. 最终网站地址以 Actions 部署结果或 **Settings → Pages** 为准。`TrustLab` 仓库的地址形式为 `https://<owner>.github.io/TrustLab/`，其中 `<owner>` 是仓库所属个人账号或组织的名称。
+
+仓库改名或转移所有者后，请重新运行部署工作流。工作流会根据当前仓库名称设置路径前缀；重新构建后，页面、链接和静态资源将使用新路径。
 
 所需权限：构建任务仅读取仓库；发布任务仅使用 `pages: write` 和 `id-token: write`。工作流使用 GitHub 自动提供的凭证，无需在源码中存储个人访问令牌。
 
